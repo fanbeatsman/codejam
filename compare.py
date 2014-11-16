@@ -1,7 +1,7 @@
 from PIL import Image, ImageChops
-from scipy.misc import imread
 import sys
 import os
+import time
 #import pprint
 
 def chunks(l, n):
@@ -14,7 +14,6 @@ point_table = ([0] + ([255] * 255))
 
 def black_or_b(a, b):
     diff = ImageChops.difference(a, b)
-    #print diff
     return diff
 
 
@@ -22,13 +21,13 @@ currentdir = os.getcwd()
 current_winner=["none",0]
 target = Image.open(sys.argv[2])
 
-print (os.walk(sys.argv[1]))
+#main method
+ticks_start=time.time()
 for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
 	for filename in filenames:
 		match=0
 		print (os.sep.join([dirpath, filename]))
-		#try:
-		if True:
+		try:
 			candidate = Image.open(os.sep.join([dirpath, filename]))
 			difference = black_or_b(target,candidate)
 			difference.save('difference.png')
@@ -45,15 +44,14 @@ for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
 	                                avg = sum(rgb)/3
 	                                if avg<50:
         	                                match=match+1
-        	                                print match
+        	        #                        print match #comment this out so the program doesnt log everything, might make runtime faster
         	        if (match > current_winner[1]):
                 	        current_winner=[filename,match]
 
 
 
-		#except:
-		#	i=0
-		#	print sys.exc_info()[0]
+		except:
+			print ("error")
 
 
 #a = Image.open('1_10_.gif')
@@ -81,5 +79,8 @@ for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
 #		avg = sum(rgb)/3
 #		if avg<50:
 #			likeness=likeness+1
-
+ticks_stop = time.time()
+runtime = ticks_stop-ticks_start
 print current_winner
+print ("Done in:")
+print runtime, " ticks"
