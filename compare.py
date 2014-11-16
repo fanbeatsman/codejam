@@ -4,6 +4,8 @@ import os
 import time
 #import pprint
 
+"""Usage: python compare.py [directory of pictures to match] [path to 1 picture you want to try matching]"""
+
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
     """
