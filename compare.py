@@ -20,21 +20,20 @@ def black_or_b(a, b):
 
 
 currentdir = os.getcwd()
-current_winner=["none",0]
+current_winner=["none",0]#current_winner keeps track of the image with highest match score up to date
 target = Image.open(sys.argv[2])
 
 #main method
 ticks_start=time.time()
-for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
+for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]): #goes through the whole directory
 	for filename in filenames:
-		match=0
-		print (os.sep.join([dirpath, filename]))
+		match=0 #match is a score, the higher it is, the better 2 pictures match each other
 		try:
 			candidate = Image.open(os.sep.join([dirpath, filename]))
 			difference = black_or_b(target,candidate)
-			difference.save('difference.png')
+			difference.save('difference.png') #saves an image that is the graphical difference of both images
                		difference_pixels = difference.getdata()
-               		height = difference_pixels.size[1]
+               		height = difference_pixels.size[1] #need height and maybe for the future to handle the situation where a person's face is exactly the same but is shifted
                		width = difference_pixels.size[0]
                		difference_pixels = list(difference_pixels)
                		difference_pixels = list(chunks(difference_pixels,3))
@@ -44,7 +43,7 @@ for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
 			for row in difference_pixels:
 	                        for rgb in row:
 	                                avg = sum(rgb)/3
-	                                if avg<50:
+	                                if avg<50:#tweakable arbitrary number 50 that determines how "exact" a match has to be
         	                                match=match+1
         	        #                        print match #comment this out so the program doesnt log everything, might make runtime faster
         	        if (match > current_winner[1]):
@@ -56,31 +55,6 @@ for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]):
 			print ("error")
 
 
-#a = Image.open('1_10_.gif')
-#b = Image.open('12_7_.gif')
-#c = black_or_b(a, b)
-#c.save('c.png')
-
-
-#c_pixels=list(imread("c.png").astype(int))
-
-#c_pixels = c.getdata()
-#height=c_pixels.size[1]
-#width=c_pixels.size[0]
-
-
-#print width
-#c_pixels=list(c_pixels)
-#c_pixels = list(chunks(c_pixels,3))
-#c_pixels = chunks(c_pixels,width)
-
-#print c_pixels
-
-#for row in c_pixels:
-#	for rgb in row:
-#		avg = sum(rgb)/3
-#		if avg<50:
-#			likeness=likeness+1
 ticks_stop = time.time()
 runtime = ticks_stop-ticks_start
 print current_winner
