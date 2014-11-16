@@ -28,6 +28,7 @@ ticks_start=time.time()
 for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]): #goes through the whole directory
 	for filename in filenames:
 		match=0 #match is a score, the higher it is, the better 2 pictures match each other
+		print (os.sep.join([dirpath, filename]))
 		try:
 			candidate = Image.open(os.sep.join([dirpath, filename]))
 			difference = black_or_b(target,candidate)
