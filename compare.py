@@ -21,11 +21,11 @@ def black_or_b(a, b):
 
 currentdir = os.getcwd()
 current_winner=["none",0]#current_winner keeps track of the image with highest match score up to date
-target = Image.open(sys.argv[2])
+target = Image.open(sys.argv[1])
 
 #main method
 ticks_start=time.time()
-for (dirpath,dirnames,filenames) in os.walk(sys.argv[1]): #goes through the whole directory
+for (dirpath,dirnames,filenames) in os.walk("allimages"): #goes through the whole directory
 	for filename in filenames:
 		match=0 #match is a score, the higher it is, the better 2 pictures match each other
 		print (os.sep.join([dirpath, filename]))
