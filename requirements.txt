@@ -1,4 +1,4 @@
-Django==1.6.1
+Django==1.11.29
 Jinja2==2.7.2
 Landscape-Client==14.01
 MarkupSafe==0.18
